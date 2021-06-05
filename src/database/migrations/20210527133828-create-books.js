@@ -2,24 +2,36 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('livros', {
+    return queryInterface.createTable('books', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      nome_livro: {
+      name: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      data: {
+      date: {
         type: Sequelize.DATE,
         allowNull: true,
       },
       isbt: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      rented: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      author_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'authors', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -36,6 +48,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    return queryInterface.dropTable('livros');
+    return queryInterface.dropTable('books');
   },
 };

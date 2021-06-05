@@ -11,6 +11,7 @@ class User extends Model {
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        admin: Sequelize.BOOLEAN,
         deleted_at: Sequelize.DATE,
       },
       {

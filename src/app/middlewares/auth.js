@@ -7,7 +7,7 @@ export default async (req, res, next) => {
 
   if (!authHeader) {
     return res.status(403).json({
-      message: getErrorMessage(403),
+      message: 'header not found 403',
     });
   }
 
@@ -22,7 +22,7 @@ export default async (req, res, next) => {
   } catch (err) {
     console.log(err);
     return res.status(401).json({
-      message: getErrorMessage(401),
+      message: 'authorization not ok',
     });
   }
 };

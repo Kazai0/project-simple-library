@@ -4,20 +4,15 @@ import User from '../../app/models/User';
 class UserController {
   async create(req, res) {
     try {
-      const { ...data } = req.body;
+      const { id, name, email, password, admin } = req.body;
 
-      await Yup.object()
-        .shape({
-          name: Yup.string().required(),
-          password: Yup.string().required(),
-          email: Yup.string().email().required(),
-        })
-        .validate(data, { abortEarly: false });
+      const user = await User.create({ id, name, email, password, admin });
 
-      const user = await User.create({ ...data });
-
-      return res.status(201).json({ user, token: user.tokenGenerate() });
+      return res
+        .status(201)
+        .json({ id, name, email, admin, token: user.tokenGenerate() });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ err: 'erro' });
     }
   }
