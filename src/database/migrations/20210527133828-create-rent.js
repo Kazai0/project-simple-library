@@ -10,11 +10,19 @@ module.exports = {
         primaryKey: true,
       },
       id_book: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'books', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
         allowNull: true,
       },
       id_user: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
         allowNull: true,
       },
       created_at: {

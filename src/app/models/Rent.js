@@ -1,14 +1,9 @@
 import Sequelize, { Model, Op } from 'sequelize';
-import 'dotenv/config';
 
-class Book extends Model {
+class Rent extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
-        date: Sequelize.DATE,
-        isbt: Sequelize.STRING,
-        rented: Sequelize.BOOLEAN,
         deleted_at: Sequelize.DATE,
       },
       {
@@ -28,7 +23,7 @@ class Book extends Model {
           },
         },
         sequelize,
-        tableName: 'books',
+        tableName: 'rents',
       }
     );
 
@@ -36,13 +31,15 @@ class Book extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Author, { foreignKey: 'author_id', as: 'author' });
-
-    this.hasMany(models.Rent, {
+    this.belongsTo(models.User, {
+      foreignKey: 'id_user',
+      as: 'user',
+    });
+    this.belongsTo(models.Book, {
       foreignKey: 'id_book',
-      as: 'rents',
+      as: 'books',
     });
   }
 }
 
-export default Book;
+export default Rent;

@@ -4,7 +4,9 @@ import User from '../models/User';
 class BookController {
   async create(req, res) {
     try {
-      console.log('aqui');
+      const severalBooks = [];
+      const books = req.body.books;
+
       const adminTrue = await User.scope('active').findOne({
         where: {
           id: req.params.admin_id,
@@ -18,13 +20,14 @@ class BookController {
           .json({ message: 'this user dont have permission ' });
       }
 
-      const { ...data } = req.body;
-
-      const book = await Book.create({
-        ...data,
+      books.forEach((books) => {
+        severalBooks.push({
+          ...books,
+        });
       });
+      await Book.bulkCreate(severalBooks);
 
-      return res.status(201).json(book);
+      return res.status(201).json(severalBooks);
     } catch (err) {
       console.log(err);
       return res.status(500).json({ err: 'erro' });

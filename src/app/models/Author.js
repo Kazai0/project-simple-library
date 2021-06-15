@@ -32,6 +32,12 @@ class Author extends Model {
 
     return this;
   }
+  static associate(models) {
+    this.hasMany(models.Book, {
+      foreignKey: 'author_id',
+      as: 'books',
+    });
+  }
 }
 
 export default Author;
